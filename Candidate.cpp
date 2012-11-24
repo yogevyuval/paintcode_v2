@@ -39,3 +39,8 @@ double Candidate::getScore(){
 void Candidate::increase(double score){
     Candidate::score+= score;
 }
+
+bool Candidate::compareCands(Candidate cand1, Candidate cand2){
+    return (cand1.getScore()>cand2.getScore());
+
+}

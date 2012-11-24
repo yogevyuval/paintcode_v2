@@ -19,6 +19,7 @@ public:
     double getScore();
     void increase(double score);
     int getRadius();
+    static bool compareCands(Candidate cand1, Candidate cand2);
 private:
     int x,y;
     int radius;

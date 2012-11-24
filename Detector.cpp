@@ -69,13 +69,9 @@ vector<Candidate> Detector::houghTransform(IplImage *thresholded){
     return Detector::candidates;
 }
 
-
-bool compareCands(Candidate  cand1,Candidate  cand2){
-    return (cand1.getScore()>cand2.getScore());
-}
 void Detector::chooseCandidate(){
     rateColor();
-    sort(candidates.begin(), candidates.end(),compareCands);
+    sort(candidates.begin(), candidates.end(),Candidate::compareCands);
     if (candidates.size()>0) {
         Detector::best = &candidates.at(0);
     }
