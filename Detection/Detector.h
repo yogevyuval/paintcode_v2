@@ -8,7 +8,7 @@
 
 #ifndef CvTest_Detector_h
 #define CvTest_Detector_h
-#include "Candidate.h"
+#include "../Entities/Candidate.h"
 #include <opencv/cvaux.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv/cxcore.hpp>

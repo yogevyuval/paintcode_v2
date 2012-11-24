@@ -6,7 +6,7 @@
 //
 //
 
-#include "Detector.h"
+#include "Detection/Detector.h"
 void paint(IplImage * frame, Candidate * cand){
     if(cand==NULL)
         return;
