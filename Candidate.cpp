@@ -17,6 +17,7 @@ Candidate::Candidate(int x,int y, int r){
     Candidate::x = x;
     Candidate::y = y;
     Candidate::radius = r;
+    Candidate::score = 0;
 }
 
 int Candidate::getX(){
@@ -31,9 +32,10 @@ int Candidate::getRadius(){
     return Candidate::radius;
 }
 
-int main(){
-    Candidate cand1 = Candidate(1, 2, 3);
-    Candidate cand2 = Candidate(3,2,1);
-    cout << cand1.getX() + cand2.getX();
-    return 0;
+double Candidate::getScore(){
+    return Candidate::score;
+}
+
+void Candidate::increase(double score){
+    Candidate::score+= score;
 }

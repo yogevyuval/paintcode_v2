@@ -16,10 +16,13 @@ public:
     Candidate(int x, int y, int r);
     int getX();
     int getY();
+    double getScore();
+    void increase(double score);
     int getRadius();
 private:
     int x,y;
     int radius;
+    double score;
 };
 
 #endif
