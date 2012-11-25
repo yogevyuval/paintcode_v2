@@ -12,7 +12,7 @@
 #include <opencv/cvaux.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv/cxcore.hpp>
-#include "vector.h"
+#include <vector>
 #include <iostream>
 
 using namespace std;
