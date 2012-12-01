@@ -49,8 +49,8 @@ IplImage* Frame::getFrame(int type)
         IplImage* img = cvQueryFrame( capture );
         return img;
     }
-    else if(type == Frame::STIL)
+    else if(type == Frame::STILL)
     {
-        return cvLoadImage( "Dog.jpg", CV_LOAD_IMAGE_COLOR );
+        return cvLoadImage( "../Dog.jpg", CV_LOAD_IMAGE_COLOR );
     }
 }

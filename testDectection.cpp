@@ -45,10 +45,8 @@ int main(int argc, char* argv[])
     }
     cvNamedWindow( "Camera", CV_WINDOW_AUTOSIZE );
     cvNamedWindow( "Filtered", CV_WINDOW_AUTOSIZE );
-
     while(1)
     {
-
 
         // Get one frame
         IplImage* frame = Frame::getFrame(Frame::VIDEO);
