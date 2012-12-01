@@ -8,6 +8,10 @@
 
 #include "Detector.h"
 
+/**
+ Detector constructor - 
+    Currently gets just the capture size.
+ */
 Detector::Detector(CvSize size){
     
     Detector::hsv_frame   = cvCreateImage(size, IPL_DEPTH_8U, 3);
@@ -24,6 +28,10 @@ Candidate * Detector::getBestCandidate(){
     return Detector::best;
 }
 
+/**
+ This is the main method that the detector works with. It get's the currnt frame 
+ and proccess it, until we get the best candidate.
+ */
 void Detector::processFrame(IplImage *frame){
     Detector::frame = frame;
     applyFilters(frame);
@@ -35,6 +43,10 @@ void Detector::processFrame(IplImage *frame){
     }
 }
 
+/**
+ This method applys the different filters on the frame such as
+ HSV conversion, smoothing and so on.
+ */
 void Detector::applyFilters(IplImage *frame){
     
     // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
@@ -49,7 +61,11 @@ void Detector::applyFilters(IplImage *frame){
 }
 
 
-
+/**
+ Circle detection
+ Currently the parameters are hardcoded.
+ builds the candidates list.
+ */
 vector<Candidate> Detector::houghTransform(IplImage *thresholded){
     Detector::candidates.clear();
     // Memory for hough circles
@@ -69,6 +85,10 @@ vector<Candidate> Detector::houghTransform(IplImage *thresholded){
     return Detector::candidates;
 }
 
+/*
+ This method is important! It chooses from the candidates list
+ the best candidate by a list of preoperties.
+ */
 void Detector::chooseCandidate(){
     rateColor();
     sort(candidates.begin(), candidates.end(),Candidate::compareCands);
@@ -82,7 +102,9 @@ void Detector::chooseCandidate(){
     
 }
 
-
+/*
+ This method gives score to each candidate by the color of the candidate.
+ */
 void Detector::rateColor(){
         for (int i = 0; i < candidates.size(); i++){
         double distanceFromOrange = 0;
