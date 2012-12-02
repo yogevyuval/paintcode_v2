@@ -9,16 +9,19 @@
 #include "Detector.h"
 
 /**
- Detector constructor - 
+ Detector constructor -
     Currently gets just the capture size.
  */
 Detector::Detector(CvSize size){
-    
+
     Detector::hsv_frame   = cvCreateImage(size, IPL_DEPTH_8U, 3);
     Detector::thresholded = cvCreateImage(size, IPL_DEPTH_8U, 1);
     /////ORNAGE/////
     Detector::hsv_min = cvScalar(5, 50, 50, 0);
     Detector::hsv_max = cvScalar(20, 256, 255, 0);
+    ////BLUE////
+//    Detector::hsv_min = cvScalar( 104, 178, 70  );
+//    Detector::hsv_max = cvScalar( 130, 240, 124 );
 }
 
 IplImage * Detector::getHSVFrame(){return Detector::hsv_frame;}
@@ -29,14 +32,14 @@ Candidate * Detector::getBestCandidate(){
 }
 
 /**
- This is the main method that the detector works with. It get's the currnt frame 
+ This is the main method that the detector works with. It get's the currnt frame
  and proccess it, until we get the best candidate.
  */
 void Detector::processFrame(IplImage *frame){
     Detector::frame = frame;
     applyFilters(frame);
     houghTransform(Detector::thresholded);
-    
+
     chooseCandidate();
     if(candidates.size() > 0){
         cout << candidates.at(0).getScore() << endl;
@@ -48,7 +51,7 @@ void Detector::processFrame(IplImage *frame){
  HSV conversion, smoothing and so on.
  */
 void Detector::applyFilters(IplImage *frame){
-    
+
     // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
     cvCvtColor(frame, hsv_frame, CV_BGR2HSV);
     // Filter out colors which are out of range.
@@ -69,19 +72,19 @@ void Detector::applyFilters(IplImage *frame){
 vector<Candidate> Detector::houghTransform(IplImage *thresholded){
     Detector::candidates.clear();
     // Memory for hough circles
-    CvMemStorage* storage = cvCreateMemStorage(0);    
+    CvMemStorage* storage = cvCreateMemStorage(0);
     CvSeq* circles = cvHoughCircles(thresholded, storage, CV_HOUGH_GRADIENT, 2,
                                     thresholded->height/3, 140, 50, 15, 100);
-        
+
     for (int i = 0; i < circles->total; i++){
-        
+
         float* p = (float*)cvGetSeqElem( circles, i );
         float x = p[0];
         float y = p[1];
         float r = p[2];
         candidates.push_back(Candidate(x, y, r));
     }
-    
+
     return Detector::candidates;
 }
 
@@ -99,7 +102,7 @@ void Detector::chooseCandidate(){
         Detector::best = NULL;
     }
 
-    
+
 }
 
 /*
@@ -112,7 +115,7 @@ void Detector::rateColor(){
         int x = curCand->getX();
         int y = curCand->getY();
         int r = curCand->getRadius();
-        
+
         if(x-(r/2) < 0 || y-(r/2) < 0 || x+(r/2) + 2 > frame->width  || y+(r/2)  + 2> frame->height)
             continue;
         Rect cropRect = Rect(x-(r/2),y-(r/2),r,r);
@@ -122,14 +125,14 @@ void Detector::rateColor(){
 
         cvCopy(Detector::frame, roiImage, NULL);
         cvResetImageROI(Detector::frame);
-        
+
         IplImage *  hsv_test    = cvCreateImage(cvSize(roiImage->width, roiImage->height), IPL_DEPTH_8U, 3);
         cvCvtColor(roiImage, hsv_test, CV_BGR2HSV);
         IplImage*  thresholded   = cvCreateImage(cvSize(roiImage->width, roiImage->height), IPL_DEPTH_8U, 1);
         cvInRangeS(hsv_test, hsv_min, hsv_max, thresholded);
         cvShowImage( "Ball", thresholded );
         cvMoveWindow("Ball", 600, 50);
-        
+
         for (int i = 0; i < thresholded->height; i++)
         {
             for (int j = 0; j < thresholded->width; j += 1){
