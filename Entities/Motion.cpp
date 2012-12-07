@@ -37,9 +37,7 @@ Motion Motion::load(int id){
     
     if (myReadFile.is_open()) {
         while (!myReadFile.eof()) {
-            
             getline(myReadFile,line);
-            
         }
     }
     myReadFile.close();
