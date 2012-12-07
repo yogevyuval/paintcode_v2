@@ -35,6 +35,15 @@ IplImage* Frame::crop(IplImage* img, int x, int y, int width, int height)
     return roiImage;
 }
 
+IplImage* Frame::crop(IplImage* img, Rect r){
+    cvSetImageROI(img, r);
+    IplImage *roiImage = cvCreateImage(cvGetSize(img), img->depth,
+                                       img->nChannels);
+    cvCopy(img, roiImage, NULL);
+    cvResetImageROI(img);
+    return roiImage;
+}
+
 IplImage* Frame::getFrame(int type)
 {
     if(type == Frame::VIDEO)
