@@ -32,7 +32,7 @@ int Motion::save(){
 }
 Motion Motion::load(int id){
     ifstream myReadFile;
-    myReadFile.open(to_string(id)+".txt");
+    myReadFile.open(id + ".txt");
     string line="";
     
     if (myReadFile.is_open()) {
