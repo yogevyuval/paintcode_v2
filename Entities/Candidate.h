@@ -8,7 +8,7 @@
 
 #ifndef CvTest_Candidate_h
 #define CvTest_Candidate_h
-
+#include <string>
 class Candidate {
     
 public:

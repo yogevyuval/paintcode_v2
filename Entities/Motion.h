@@ -6,9 +6,34 @@
 //  Copyright (c) 2012 Michael Lantsman. All rights reserved.
 //
 
-#ifndef __PaintCode_V2__Motion__
-#define __PaintCode_V2__Motion__
 
 #include <iostream>
+#include "Candidate.h"
+#include <vector>
 
-#endif /* defined(__PaintCode_V2__Motion__) */
+using namespace std;
+
+class Motion{
+public:
+    Motion();
+    void start();
+    void stop();
+    int compare(Motion m2);
+    int save(Motion m1);
+    Motion load(int id);
+    void smooth();
+    void add(Candidate * c);
+    int length();
+    Candidate * getCandidate(int i);
+    
+    
+private:
+    int compareByLength(Motion m2);
+    int compareByRadius(Motion m2);
+    int compareByNumberOfCandidates(Motion m2);
+    Candidate * firstCandidte;
+    Candidate * lastCandidate;
+    vector <Candidate *> sequence;
+    
+    
+};
