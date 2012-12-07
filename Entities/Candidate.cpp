@@ -45,3 +45,22 @@ bool Candidate::compareCands(Candidate cand1, Candidate cand2){
 
 }
 
+//x,y,radius,score
+string Candidate::toString(){
+    return (to_string(Candidate::getX())+","+to_string(Candidate::getY())+","+to_string(Candidate::getRadius())+","+to_string(Candidate::getScore()));
+    
+    //    string result;
+    //
+    //    ostringstream convert;
+    //
+    //    convert << getX();
+    //    result+=convert.str()+",";
+    //    convert << getY();
+    //    result+=convert.str()+",";
+    //    convert << getRadius();
+    //    result+=convert.str()+=",";
+    //    convert << getScore();
+    //    result+=convert.str();
+    //    
+    //    return result;
+}

@@ -26,7 +26,7 @@ int Motion::save(Motion m1){
     myfile.open ("DB.txt");
     
     for(int i=0;i<m1.length();i++){
-//        myfile << (*m1.getCandidate(i)).toString();
+        myfile << (*m1.getCandidate(i)).toString();
     }
     myfile.close();
     return 0;
