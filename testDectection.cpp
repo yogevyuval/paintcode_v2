@@ -8,6 +8,7 @@
 
 #include "Detection/Detector.h"
 #include "Entities/Frame.h"
+#include "Entities/Motion.h"
 void paint(IplImage * frame, Candidate * cand){
     if(cand==NULL)
         return;
@@ -32,6 +33,7 @@ int main(int argc, char* argv[])
     int y = 100;
     int add = 130;
 
+    Motion myMotion= Motion();
     // Default capture size - 640x480
 
     IplImage* frame = Frame::getFrame(Frame::VIDEO);
@@ -50,20 +52,24 @@ int main(int argc, char* argv[])
 
         // Get one frame
         IplImage* frame = Frame::getFrame(Frame::VIDEO);
-        IplImage *roiImage = Frame::crop(frame, x,y,add,add);
+//        IplImage *roiImage = Frame::crop(frame, x,y,add,add);
         if( !frame )
         {
             fprintf( stderr, "ERROR: frame is null...\n" );
             getchar();
             break;
         }
-        detector.processFrame(frame);
-        paint(frame, detector.getBestCandidate());
+//        detector.processFrame(frame);
+//        paint(frame, detector.getBestCandidate());
         cvRectangle(frame, cvPoint(x, y),cvPoint(x+add, y+add), CV_RGB(0,255,0));
-        cvShowImage( "Filtered", roiImage );
+//        cvShowImage( "Filtered", roiImage );
         cvShowImage( "Camera", frame );
-
-        if( (cvWaitKey(10) & 255) == 27 ) break;
+//        myMotion.add(detector.getBestCandidate());
+//        if( (cvWaitKey(10) & 255) == 27 ) break;
+//        if( cvWaitKey(10) == 'ESC' ) {
+//            myMotion.save();
+//        }
+        
     }
     cvDestroyWindow( "mywindow" );
     return 0;

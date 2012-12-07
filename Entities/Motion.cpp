@@ -10,7 +10,6 @@
 #include "Candidate.h"
 #include <iostream>
 #include <fstream>
-#include <regex.h>
 
 
 Motion::Motion(){
@@ -21,12 +20,12 @@ void Motion::add( Candidate * c1){
     Motion::sequence.push_back(c1);
 }
 
-int Motion::save(Motion m1){
+int Motion::save(){
     std::ofstream myfile;
     myfile.open ("DB.txt");
     
-    for(int i=0;i<m1.length();i++){
-        myfile << (*m1.getCandidate(i)).toString();
+    for(int i=0;i<length();i++){
+        myfile << getCandidate(i)->toString();
     }
     myfile.close();
     return 0;

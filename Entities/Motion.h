@@ -19,7 +19,7 @@ public:
     void start();
     void stop();
     int compare(Motion m2);
-    int save(Motion m1);
+    int save();
     Motion load(int id);
     void smooth();
     void add(Candidate * c);

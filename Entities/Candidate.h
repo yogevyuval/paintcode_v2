@@ -9,6 +9,7 @@
 #ifndef CvTest_Candidate_h
 #define CvTest_Candidate_h
 #include <string>
+using namespace std;
 class Candidate {
     
 public:
