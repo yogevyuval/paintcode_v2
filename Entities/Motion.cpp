@@ -18,19 +18,26 @@ Motion::Motion(){
 
 void Motion::add( Candidate * c1){
     Motion::sequence.push_back(c1);
+   
 }
 
 int Motion::save(){
     std::ofstream myfile;
-    myfile.open ("DB.txt");
-    
+    myfile.open ("DB\DB.txt");
+    if (myfile.is_open()) {
+        cout<< "open";
+        myfile<<"yay";
+    }
     for(int i=0;i<length();i++){
-        myfile << getCandidate(i)->toString();
+        cout<<"in";
+        myfile << getCandidate(i)->toString()+";";
+        cout<< getCandidate(i)->toString()+";";
     }
     myfile.close();
     return 0;
 }
 Motion Motion::load(int id){
+    int NUM_OF_FIELDS=1;
     ifstream myReadFile;
     myReadFile.open(id + ".txt");
     string line="";
@@ -38,6 +45,9 @@ Motion Motion::load(int id){
     if (myReadFile.is_open()) {
         while (!myReadFile.eof()) {
             getline(myReadFile,line);
+            for (int i=0; i<NUM_OF_FIELDS; i++) {
+                
+            }
         }
     }
     myReadFile.close();

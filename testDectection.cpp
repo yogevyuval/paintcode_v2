@@ -26,7 +26,7 @@ void paint(IplImage * frame, Candidate * cand){
     cvRectangle(frame, cvPoint(x-r/2,y-r/2), cvPoint(x+r/2, y+r/2), CV_RGB(0,255,0));
 }
 
-int main(int argc, char* argv[])
+int YuvalIsGay(int argc, char* argv[])
 {
 
     int x = 300;

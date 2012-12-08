@@ -13,7 +13,7 @@ public:
     static const int VIDEO = 0, STILL = 1;
     static IplImage* crop(IplImage* img, int x, int y, int width, int height);
     static IplImage* getFrame(int type);
-    static IplImage* crop(IplImage* img, Rect r);
+    static IplImage* crop(IplImage* img, cv::Rect r);
 };
 
 #endif // FRAME_H_INCLUDED
