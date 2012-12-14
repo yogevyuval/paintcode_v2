@@ -15,13 +15,8 @@ public:
     static const int CAM_FRAME_HEIGHT = 480;
     static const int VIDEO = 0, STILL = 1;
     static IplImage* crop(IplImage* img, int x, int y, int width, int height);
-<<<<<<< HEAD
-    static IplImage* getFrame(int type);
-    static IplImage* crop(IplImage* img, cv::Rect r);
-=======
     IplImage* getFrame();
     static IplImage* crop(IplImage* img, Rect r);
->>>>>>> Fixes and Improvments
 };
 
 #endif // FRAME_H_INCLUDED
