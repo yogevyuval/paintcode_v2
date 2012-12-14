@@ -23,13 +23,8 @@ void Motion::add( Candidate * c1){
 
 int Motion::save(){
     std::ofstream myfile;
-    myfile.open ("DB\DB.txt");
-    if (myfile.is_open()) {
-        cout<< "open";
-        myfile<<"yay";
-    }
+    myfile.open ("DB.txt");
     for(int i=0;i<length();i++){
-        cout<<"in";
         myfile << getCandidate(i)->toString()+";";
         cout<< getCandidate(i)->toString()+";";
     }
