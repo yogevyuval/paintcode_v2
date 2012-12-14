@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 //        cvShowImage( "Filtered", roiImage );
         cvAdd(frame, imgTrack, frame);
         cvShowImage( "Camera", frame );
-//        cvShowImage( "TR", detector.getThresholdedFrame() );
+        cvShowImage( "TR", detector.getThresholdedFrame() );
 //        myMotion.add(detector.getBestCandidate());
         if( (cvWaitKey(10) & 255) == 27 ) break;
 //        if( cvWaitKey(10) == 'ESC' ) {
