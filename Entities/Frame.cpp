@@ -24,6 +24,19 @@
 using namespace std;
 using namespace cv;
 
+CvCapture* capture;
+IplImage* frame;
+
+
+Frame::Frame(int width, int height,int type){
+    
+    capture = cvCaptureFromCAM( 0 );
+    cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_WIDTH, width );
+    cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_HEIGHT, height );
+    Frame::type = type;
+}
+
+
 IplImage* Frame::crop(IplImage* img, int x, int y, int width, int height)
 {
     Rect cropRect = Rect(x,y,width ,height);
@@ -44,19 +57,16 @@ IplImage* Frame::crop(IplImage* img, Rect r){
     return roiImage;
 }
 
-IplImage* Frame::getFrame(int type)
+IplImage* Frame::getFrame()
 {
     if(type == Frame::VIDEO)
     {
-        CvCapture* capture = cvCaptureFromCAM( 0 );
-        cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_WIDTH, Frame::CAM_FRAME_WIDTH );
-        cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_HEIGHT, Frame::CAM_FRAME_HEIGHT );
         if(!capture)
         {
             return NULL;
         }
-        IplImage* img = cvQueryFrame( capture );
-        return img;
+        frame = cvQueryFrame( capture );
+        return frame;
     }
     else if(type == Frame::STILL)
     {

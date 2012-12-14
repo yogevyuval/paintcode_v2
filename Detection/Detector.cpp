@@ -53,14 +53,15 @@ void Detector::processFrame(IplImage *frame){
 void Detector::applyFilters(IplImage *frame){
 
     // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
+    cvSmooth( thresholded, thresholded, CV_BLUR, 3, 3 );
     cvCvtColor(frame, hsv_frame, CV_BGR2HSV);
     // Filter out colors which are out of range.
     cvInRangeS(hsv_frame, hsv_min, hsv_max, thresholded);
     // hough detector works better with some smoothing of the image
-    cvSmooth( thresholded, thresholded, CV_BLUR, 15, 15 );
+
     cvErode(thresholded,thresholded,NULL,2);
-    //        cvMorphologyEx(thresholded, thresholded, storage, NULL, CV_MOP_CLOSE, 2);
-    cvSmooth( thresholded, thresholded, CV_BLUR, 15, 15 );
+//    //        cvMorphologyEx(thresholded, thresholded, storage, NULL, CV_MOP_CLOSE, 2);
+    cvSmooth( thresholded, thresholded, CV_BLUR, 19, 19 );
 }
 
 
@@ -130,8 +131,8 @@ void Detector::rateColor(){
         cvCvtColor(roiImage, hsv_test, CV_BGR2HSV);
         IplImage*  thresholded   = cvCreateImage(cvSize(roiImage->width, roiImage->height), IPL_DEPTH_8U, 1);
         cvInRangeS(hsv_test, hsv_min, hsv_max, thresholded);
-        cvShowImage( "Ball", thresholded );
-        cvMoveWindow("Ball", 600, 50);
+//        cvShowImage( "Ball", thresholded );
+//        cvMoveWindow("Ball", 600, 50);
 
         for (int i = 0; i < thresholded->height; i++)
         {
