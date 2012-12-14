@@ -51,10 +51,10 @@ void paint(IplImage * frame, Candidate * cand){
     lastY1 = y;
 }
 
-int YuvalIsGay(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
    
-    Motion myMotion= Motion();
+//    Motion myMotion= Motion();
     // Default capture size - 640x480
 
     CvCapture* capture = cvCaptureFromCAM( 0 );

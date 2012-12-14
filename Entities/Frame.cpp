@@ -5,24 +5,8 @@
 //
 //
 
-#include <cvaux.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <cxcore.hpp>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include <math.h>
-#include <float.h>
-#include <limits.h>
-#include <time.h>
-#include <ctype.h>
-#include <math.h>
-#include <iostream>
-#include "../Entities/Frame.h"
 
-using namespace std;
-using namespace cv;
+#include "Frame.h"
 
 CvCapture* capture;
 IplImage* frame;

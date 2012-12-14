@@ -1,9 +1,12 @@
 #ifndef FRAME_H_INCLUDED
 #define FRAME_H_INCLUDED
-#include <stdio.h>
-#include "cv.h"
-#include "highgui.h"
+#include <opencv/cvaux.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv/cxcore.hpp>
+#include <iostream>
 using namespace cv;
+using namespace std;
+
 class Frame
 {
 
