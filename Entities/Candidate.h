@@ -21,6 +21,10 @@ public:
     void increase(double score);
     int getRadius();
     static bool compareCands(Candidate cand1, Candidate cand2);
+    void setX(int x);
+    void setY(int y);
+    void setRadius(int radius);
+    void setScore(double score);
     string toString();
 private:
     int x,y;

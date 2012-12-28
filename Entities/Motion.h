@@ -19,8 +19,8 @@ public:
     void start();
     void stop();
     int compare(Motion m2);
-    int save();
-    Motion load(int id);
+    int save(string id);
+    Motion load(string id);
     void smooth();
     void add(Candidate * c);
     int length();
