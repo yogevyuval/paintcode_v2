@@ -9,6 +9,7 @@
 #include "Detection/Detector.h"
 #include "Entities/Frame.h"
 #include "Entities/Motion.h"
+#include "Entities/MotionHandler.h"
 #include <cmath>
 #include <iostream>
 #include <fstream>
@@ -43,8 +44,8 @@ void paint(IplImage * frame, Candidate * cand){
 
     cvCircle( frame, cvPoint(cvRound(x),cvRound(y)),
              3, CV_RGB(0,255,0), -1, 8, 0 );
-//    cvCircle( frame, cvPoint(cvRound(x),cvRound(y)),
-//             cvRound(r), CV_RGB(255,0,0), 3, 8, 0 );
+    cvCircle( frame, cvPoint(cvRound(x),cvRound(y)),
+             cvRound(r), CV_RGB(255,0,0), 3, 8, 0 );
 //    cvRectangle(frame, cvPoint(x-r/2,y-r/2), cvPoint(x+r/2, y+r/2), CV_RGB(0,255,0));
     
     lastX1 = x;
@@ -53,7 +54,7 @@ void paint(IplImage * frame, Candidate * cand){
 
 int main(int argc, char* argv[])
 {
-   
+    
 //    Motion myMotion= Motion();
     // Default capture size - 640x480
 
@@ -72,8 +73,11 @@ int main(int argc, char* argv[])
         getchar();
         return -1;
     }
+    
+    cvNamedWindow( "TR", CV_WINDOW_AUTOSIZE );
     cvNamedWindow( "Camera", CV_WINDOW_AUTOSIZE );
-//    cvNamedWindow( "Filtered", CV_WINDOW_AUTOSIZE );
+
+    MotionHandler motionHandler = MotionHandler();
     while(1)
     {
 
@@ -87,13 +91,40 @@ int main(int argc, char* argv[])
             getchar();
             break;
         }
+        
+       
+
+
         detector.processFrame(frame);
-        paint(frame, detector.getBestCandidate());
+        Candidate *bestCand = detector.getBestCandidate();
+        paint(frame, bestCand);
+        motionHandler.feed(bestCand);
 //        cvRectangle(frame, cvPoint(x, y),cvPoint(x+add, y+add), CV_RGB(0,255,0));
 //        cvShowImage( "Filtered", roiImage );
+        CvScalar color;
+        CvPoint start,end;
+        if (motionHandler.getState()==MotionHandler::WAITING_FOR_START) {
+            start = cvPoint(150,150);
+            end = cvPoint(300,300);
+            color = cvScalar(255,0,0);
+        }
+        else if(motionHandler.getState() == MotionHandler::RECORDING){
+            start = cvPoint(10,10);
+            end = cvPoint(160,160);
+            color = cvScalar(0,0,255);
+        }
+        else if(motionHandler.getState() == MotionHandler::FINISHED){
+            start = cvPoint(10,10);
+            end = cvPoint(160,160);
+            color = cvScalar(0,255,0);
+        }
+        
+        cvRectangle(frame, start, end, color);
+        
         cvAdd(frame, imgTrack, frame);
-        cvShowImage( "Camera", frame );
         cvShowImage( "TR", detector.getThresholdedFrame() );
+        cvShowImage( "Camera", frame );
+
 //        myMotion.add(detector.getBestCandidate());
         if( (cvWaitKey(10) & 255) == 27 ) break;
 //        if( cvWaitKey(10) == 'ESC' ) {

@@ -42,18 +42,26 @@ public:
     void record();
     void feed(Candidate* cand);
     int getState();
-    CvRect getSearchArea();
+    CvRect getStartSquare();
+    CvRect getEndSquare();
     MotionHandler();
+    void print();
 
 private:
 
     deque<Candidate *> recentRecords;
-    Motion m;
-    CvRect toSearch;
+    Motion motion;
+    CvRect startSquare;
+    CvRect endSquare;
     int currentState;
     void updateState(); //This method will check the right things according to the current state.
-    bool checkForStart(Candidate* c);
+    void waiting();
+    bool checkForStart();
+    bool isInSquare(CvRect rect,Candidate cand);
     bool checkForEnd();
+    void recording(Candidate * c);
+    void end();
+    bool didStopInSquare(CvRect square);
     void addToDeque(Candidate* c);
 
 };

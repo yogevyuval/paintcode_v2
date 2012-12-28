@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Michael Lantsman. All rights reserved.
 //
 
+#ifndef MOTION_H_
+#define MOTION_H_
 
 #include <iostream>
 #include "Candidate.h"
@@ -37,3 +39,5 @@ private:
     
     
 };
+
+#endif //Defined

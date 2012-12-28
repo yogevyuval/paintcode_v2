@@ -20,8 +20,8 @@ Detector::Detector(CvSize size){
     Detector::hsv_min = cvScalar(5, 50, 50, 0);
     Detector::hsv_max = cvScalar(20, 256, 255, 0);
     ////BLUE////
-//    Detector::hsv_min = cvScalar( 104, 178, 70  );
-//    Detector::hsv_max = cvScalar( 130, 240, 124 );
+//    Detector::hsv_min = cvScalar( 100, 100, 100  );
+//    Detector::hsv_max = cvScalar( 130, 255, 255 );
 }
 
 IplImage * Detector::getHSVFrame(){return Detector::hsv_frame;}
@@ -42,7 +42,7 @@ void Detector::processFrame(IplImage *frame){
 
     chooseCandidate();
     if(candidates.size() > 0){
-        cout << candidates.at(0).getScore() << endl;
+//        cout << candidates.at(0).getScore() << endl;
     }
 }
 
@@ -85,7 +85,7 @@ vector<Candidate> Detector::houghTransform(IplImage *thresholded){
         float r = p[2];
         candidates.push_back(Candidate(x, y, r));
     }
-
+    
     return Detector::candidates;
 }
 
@@ -97,7 +97,7 @@ void Detector::chooseCandidate(){
     rateColor();
     sort(candidates.begin(), candidates.end(),Candidate::compareCands);
     if (candidates.size()>0) {
-        Detector::best = &candidates.at(0);
+        Detector::best = new Candidate(candidates.at(0).getX(),candidates.at(0).getY(),candidates.at(0).getRadius());
     }
     else{
         Detector::best = NULL;
