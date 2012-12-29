@@ -17,8 +17,8 @@ Detector::Detector(CvSize size){
     Detector::hsv_frame   = cvCreateImage(size, IPL_DEPTH_8U, 3);
     Detector::thresholded = cvCreateImage(size, IPL_DEPTH_8U, 1);
     /////ORNAGE/////
-    Detector::hsv_min = cvScalar(5, 50, 50, 0);
-    Detector::hsv_max = cvScalar(20, 256, 255, 0);
+    Detector::hsv_min = cvScalar(5, 50, 50);
+    Detector::hsv_max = cvScalar(20, 256, 255);
     ////BLUE////
 //    Detector::hsv_min = cvScalar( 100, 100, 100  );
 //    Detector::hsv_max = cvScalar( 130, 255, 255 );
@@ -97,7 +97,7 @@ void Detector::chooseCandidate(){
     rateColor();
     sort(candidates.begin(), candidates.end(),Candidate::compareCands);
     if (candidates.size()>0) {
-        Detector::best = new Candidate(candidates.at(0).getX(),candidates.at(0).getY(),candidates.at(0).getRadius());
+        Detector::best = &candidates.at(0);
     }
     else{
         Detector::best = NULL;

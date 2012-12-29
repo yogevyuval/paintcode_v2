@@ -12,37 +12,27 @@ CvCapture* capture;
 IplImage* frame;
 
 
-Frame::Frame(int width, int height,int type)
+Frame::Frame(int width, int height)
 {
 
     capture = cvCaptureFromCAM( 0 );
     cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_WIDTH, width );
     cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_HEIGHT, height );
-    Frame::type = type;
-    // on video - initialize curFrame:
-    getFrame();
+    Frame::type = Frame::VIDEO;
+    Frame::size = cvSize(width, height);
 }
 
-
-IplImage* Frame::crop(IplImage* img, int x, int y, int width, int height)
+Frame::Frame(int width, int height,char* imgPath)
 {
-    Rect cropRect = Rect(x,y,width ,height);
-    cvSetImageROI(img, cropRect);
-    IplImage *roiImage = cvCreateImage(cvGetSize(img), img->depth,
-                                       img->nChannels);
-    cvCopy(img, roiImage, NULL);
-    cvResetImageROI(img);
-    return roiImage;
-}
-
-IplImage* Frame::crop(IplImage* img, Rect r)
-{
-    cvSetImageROI(img, r);
-    IplImage *roiImage = cvCreateImage(cvGetSize(img), img->depth,
-                                       img->nChannels);
-    cvCopy(img, roiImage, NULL);
-    cvResetImageROI(img);
-    return roiImage;
+    Frame::type = Frame::STILL;
+    Frame::size = cvSize(width, height);
+    IplImage *original = cvLoadImage(imgPath);
+    if(!original){
+        cout << "Error: Bad Image Path!" << endl;
+        exit(1);
+    }
+    still = cvCreateImage(cvSize(width, height), original->depth, original->nChannels);
+    cvResize(original, still);
 }
 
 IplImage* Frame::getFrame()
@@ -51,21 +41,25 @@ IplImage* Frame::getFrame()
     {
         if(!capture)
         {
-            return NULL;
+            cout << "Error: Capture is NULL" << endl;
+            exit(1);
         }
         frame = cvQueryFrame( capture );
-        cvCopy(&frame, &curFrame, NULL);
+        if(!frame){
+            cout << "Error: Frame is NULL!" << endl;
+            exit(1);
+        }
         return frame;
     }
     else if(type == Frame::STILL)
     {
-        return cvLoadImage( "../Dog.jpg", CV_LOAD_IMAGE_COLOR );
+        return still;
     }
 }
 
 void Frame::drawAndShow(Motion* m)
 {
-    IplImage* show = cvCreateImage(cvSize(CAM_FRAME_WIDTH, CAM_FRAME_HEIGHT),IPL_DEPTH_8U, 3);
+    IplImage* show = cvCreateImage(Frame::size,IPL_DEPTH_8U, 3);
     Candidate *c1, *c2;
     for(int i = 1; i < m->length(); i++)
     {

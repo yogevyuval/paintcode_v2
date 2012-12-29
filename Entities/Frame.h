@@ -15,16 +15,14 @@ class Frame
 {
 
 public:
-    Frame(int width, int height, int type);
-    Frame(CvSize size, int type);
+    Frame(int width, int height);
+    Frame(int width, int height, char* imgPath);
     int type;
-    static const int CAM_FRAME_WIDTH = 640;
-    static const int CAM_FRAME_HEIGHT = 480;
+    CvSize size;
+    IplImage* still;
     static const int VIDEO = 0, STILL = 1;
-    static IplImage* crop(IplImage* img, int x, int y, int width, int height);
     IplImage* getFrame();
-    static IplImage* crop(IplImage* img, Rect r);
-    static void drawAndShow(Motion* m);
+    void drawAndShow(Motion* m);
     void drawSquare(MotionHandler* mh);
 private:
     IplImage curFrame;

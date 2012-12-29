@@ -54,53 +54,22 @@ void paint(IplImage * frame, Candidate * cand){
 
 int main(int argc, char* argv[])
 {
-    
-//    Motion myMotion= Motion();
-    // Default capture size - 640x480
-
-    CvCapture* capture = cvCaptureFromCAM( 0 );
-    cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_WIDTH, 640 );
-    cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_HEIGHT, 480 );
-    IplImage* frame = cvQueryFrame( capture );
+    Frame input = Frame(640, 480);
+    IplImage* frame = input.getFrame();
     imgTrack=cvCreateImage(cvGetSize(frame),IPL_DEPTH_8U, 3);
-    cvZero(imgTrack); //covert the image, 'imgTracking' to black
-//    IplImage* frame = Frame::getFrame(Frame::VIDEO);
+    cvZero(imgTrack);
     CvSize size = cvGetSize(frame);
     Detector detector = Detector(size);
-    if( !frame )
-    {
-        fprintf( stderr, "ERROR: capture is NULL \n" );
-        getchar();
-        return -1;
-    }
-    
     cvNamedWindow( "TR", CV_WINDOW_AUTOSIZE );
     cvNamedWindow( "Camera", CV_WINDOW_AUTOSIZE );
-
     MotionHandler motionHandler = MotionHandler();
     while(1)
     {
-
-        // Get one frame
-        IplImage* frame = cvQueryFrame( capture );
-
-//        IplImage *roiImage = Frame::crop(frame, x,y,add,add);
-        if( !frame )
-        {
-            fprintf( stderr, "ERROR: frame is null...\n" );
-            getchar();
-            break;
-        }
-        
-       
-
-
+        frame = input.getFrame();
         detector.processFrame(frame);
-        Candidate *bestCand = detector.getBestCandidate();
+        Candidate* bestCand = detector.getBestCandidate();
         paint(frame, bestCand);
         motionHandler.feed(bestCand);
-//        cvRectangle(frame, cvPoint(x, y),cvPoint(x+add, y+add), CV_RGB(0,255,0));
-//        cvShowImage( "Filtered", roiImage );
         CvScalar color;
         CvPoint start,end;
         if (motionHandler.getState()==MotionHandler::WAITING_FOR_START) {
@@ -124,16 +93,12 @@ int main(int argc, char* argv[])
         cvAdd(frame, imgTrack, frame);
         cvShowImage( "TR", detector.getThresholdedFrame() );
         cvShowImage( "Camera", frame );
+        cvMoveWindow("TR", 600, 50);
 
-//        myMotion.add(detector.getBestCandidate());
-        if( (cvWaitKey(10) & 255) == 27 ) break;
-//        if( cvWaitKey(10) == 'ESC' ) {
-//            myMotion.save();
-//        }
-
-        
+        if( (cvWaitKey(10) & 255) == 27 ) break;//ESC
     }
-    cvDestroyWindow( "mywindow" );
+    cvDestroyWindow( "TR" );
+    cvDestroyWindow( "Camera" );
     return 0;
 }
 

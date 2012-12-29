@@ -22,9 +22,9 @@ void Motion::add( Candidate * c1){
 }
 
 
-int Motion::save(string  id){
+int Motion::save(string id){
     std::ofstream myfile;
-    myfile.open ("DB/"+id+".txt",ios::app);
+//    myfile.open ("DB/"+id+".txt",ios::app);
     Candidate c;
     if(myfile.is_open()){
         for(int i=0;i<length();i++){
@@ -45,7 +45,7 @@ Motion Motion::load(string id){
     int NUM_OF_FIELDS=4;//change if needed
     
     ifstream myReadFile;
-    myReadFile.open("DB/"+ id + ".txt");
+//    myReadFile.open("DB/"+ id + ".txt");
     string line="";
     Motion m=Motion();
     Candidate c;
