@@ -21,8 +21,8 @@ public:
     void start();
     void stop();
     int compare(Motion m2);
-    int save(string id);
-    Motion load(string id);
+    int save();
+    Motion load(int id);
     void smooth();
     void add(Candidate * c);
     int length();
@@ -30,6 +30,7 @@ public:
     
     
 private:
+    int getNextId();
     int compareByLength(Motion m2);
     int compareByRadius(Motion m2);
     int compareByNumberOfCandidates(Motion m2);

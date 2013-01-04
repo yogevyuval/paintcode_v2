@@ -8,7 +8,6 @@
 
 #include "Motion.h"
 #include "Candidate.h"
-#include <iostream>
 #include <fstream>
 
 
@@ -21,10 +20,15 @@ void Motion::add( Candidate * c1){
    
 }
 
+int Motion::getNextId(){
+    return 0;
+}
 
-int Motion::save(string id){
+int Motion::save(){
     std::ofstream myfile;
-//    myfile.open ("DB/"+id+".txt",ios::app);
+    char fileName[20];
+    sprintf(fileName, "DB/%d.txt",getNextId());
+    myfile.open (fileName,ios::app);
     Candidate c;
     if(myfile.is_open()){
         for(int i=0;i<length();i++){
@@ -41,12 +45,12 @@ int Motion::save(string id){
     myfile.close();
     return 0;
 }
-Motion Motion::load(string id){
+Motion Motion::load(int id){
     int NUM_OF_FIELDS=4;//change if needed
-    
-    ifstream myReadFile;
-//    myReadFile.open("DB/"+ id + ".txt");
-    string line="";
+    char fileName[20];
+    sprintf(fileName, "DB/%d.txt",id );
+    ifstream myReadFile(fileName);
+    string line;
     Motion m=Motion();
     Candidate c;
     int i=0,x=0,y=0,radius=0;

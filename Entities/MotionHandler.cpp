@@ -49,6 +49,7 @@ void MotionHandler::recording(Candidate * cand){
     }
     if(checkForEnd()){
         cout << "Finished" << endl;
+        MotionHandler::motion.save();
         currentState = MotionHandler::FINISHED;
     }
 }
