@@ -14,7 +14,6 @@ IplImage* frame;
 
 Frame::Frame(int width, int height)
 {
-
     capture = cvCaptureFromCAM( 0 );
     cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_WIDTH, width );
     cvSetCaptureProperty( capture, CV_CAP_PROP_FRAME_HEIGHT, height );
@@ -74,7 +73,20 @@ void Frame::drawAndShow(Motion* m)
 }
 
 
-void Frame::drawSquare(MotionHandler * mh)
+void Frame::drawStartSquare(MotionHandler * mh)
 {
+    CvRect square = mh->getStartSquare();
+    CvScalar color;
+    if(mh->didStopInSquare(square)) {color = cvScalar(0, 255, 0);}
+    else {color = cvScalar(255, 0, 0);}
+    cvRectangle(&curFrame, cvPoint(square.x, square.y), cvPoint(square.x + square.width, square.y + square.height), color, 1, 8, 0);
+}
 
+void Frame::drawEndSquare(MotionHandler * mh)
+{
+    CvRect square = mh->getEndSquare();
+    CvScalar color;
+    if(mh->didStopInSquare(square)) {color = cvScalar(0, 255, 0);}
+    else {color = cvScalar(255, 0, 0);}
+    cvRectangle(&curFrame, cvPoint(square.x, square.y), cvPoint(square.x + square.width, square.y + square.height), color, 1, 8, 0);
 }

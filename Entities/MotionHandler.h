@@ -46,6 +46,7 @@ public:
     CvRect getEndSquare();
     MotionHandler();
     void print();
+    bool didStopInSquare(CvRect square);
 
 private:
 
@@ -61,7 +62,6 @@ private:
     bool checkForEnd();
     void recording(Candidate * c);
     void end();
-    bool didStopInSquare(CvRect square);
     void addToDeque(Candidate* c);
 
 };

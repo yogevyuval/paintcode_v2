@@ -23,7 +23,8 @@ public:
     static const int VIDEO = 0, STILL = 1;
     IplImage* getFrame();
     void drawAndShow(Motion* m);
-    void drawSquare(MotionHandler* mh);
+    void drawStartSquare(MotionHandler* mh);
+    void drawEndSquare(MotionHandler* mh);
 private:
     IplImage curFrame;
 
