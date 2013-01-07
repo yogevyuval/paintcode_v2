@@ -47,6 +47,8 @@ public:
     MotionHandler();
     void print();
     bool didStopInSquare(CvRect square);
+    Candidate* getLastCandidate();
+    bool isInSquare(CvRect rect,Candidate cand);
 
 private:
 
@@ -58,7 +60,6 @@ private:
     void updateState(); //This method will check the right things according to the current state.
     void waiting();
     bool checkForStart();
-    bool isInSquare(CvRect rect,Candidate cand);
     bool checkForEnd();
     void recording(Candidate * c);
     void end();

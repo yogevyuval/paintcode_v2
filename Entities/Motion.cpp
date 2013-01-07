@@ -12,12 +12,12 @@
 
 
 Motion::Motion(){
-    
+
 }
 
 void Motion::add( Candidate * c1){
     Motion::sequence.push_back(c1);
-   
+
 }
 
 int Motion::getNextId(){
@@ -45,38 +45,38 @@ int Motion::save(){
     myfile.close();
     return 0;
 }
-Motion Motion::load(int id){
-    int NUM_OF_FIELDS=4;//change if needed
-    char fileName[20];
-    sprintf(fileName, "DB/%d.txt",id );
-    ifstream myReadFile(fileName);
-    string line;
-    Motion m=Motion();
-    Candidate c;
-    int i=0,x=0,y=0,radius=0;
-    if (myReadFile.is_open()) {
-        cout<<"file is open";
-        getline(myReadFile,line);
-        while (!myReadFile.eof()) {
-            if(i%NUM_OF_FIELDS==0){
-                x=atoi(line.c_str());
-            }
-            else if(i%NUM_OF_FIELDS==1)
-                y=atoi(line.c_str());
-            else if(i%NUM_OF_FIELDS==2){
-                radius=atoi(line.c_str());
-            }else if(i%NUM_OF_FIELDS==3){
-                c=Candidate(x, y, radius);
-                c.setScore(atof(line.c_str()));
-                m.add(&c);
-            }
-            i++;
-            getline(myReadFile,line);
-        }
-    }
-    myReadFile.close();
-    return m;
-}
+//Motion Motion::load(int id){
+//    int NUM_OF_FIELDS=4;//change if needed
+//    char fileName[20];
+//    sprintf(fileName, "DB/%d.txt",id );
+//    ifstream myReadFile(fileName);
+//    string line;
+//    Motion m=Motion();
+//    Candidate c;
+//    int i=0,x=0,y=0,radius=0;
+//    if (myReadFile.is_open()) {
+//        cout<<"file is open";
+//        getline(myReadFile,line);
+//        while (!myReadFile.eof()) {
+//            if(i%NUM_OF_FIELDS==0){
+//                x=atoi(line.c_str());
+//            }
+//            else if(i%NUM_OF_FIELDS==1)
+//                y=atoi(line.c_str());
+//            else if(i%NUM_OF_FIELDS==2){
+//                radius=atoi(line.c_str());
+//            }else if(i%NUM_OF_FIELDS==3){
+//                c=Candidate(x, y, radius);
+//                c.setScore(atof(line.c_str()));
+//                m.add(&c);
+//            }
+//            i++;
+//            getline(myReadFile,line);
+//        }
+//    }
+//    myReadFile.close();
+//    return m;
+//}
 
 Candidate * Motion::getCandidate(int i){
     return Motion::sequence.at(i);

@@ -22,11 +22,13 @@ public:
     IplImage* still;
     static const int VIDEO = 0, STILL = 1;
     IplImage* getFrame();
-    void drawAndShow(Motion* m);
-    void drawStartSquare(MotionHandler* mh);
-    void drawEndSquare(MotionHandler* mh);
+    void drawAndShow(Motion* m); // shows a motion on a blank window
+    void drawPendingSquare(MotionHandler* mh); // draws the squares for start/end on the current frame
+    void drawCand(Candidate * cand); // paints a candidate on the current frame
+    void drawMotion(MotionHandler * mh); // draws the notion so far on the current frame
 private:
-    IplImage curFrame;
+    IplImage* curFrame;
+    IplImage* motionTrack;
 
 };
 
