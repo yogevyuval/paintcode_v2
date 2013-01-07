@@ -53,15 +53,26 @@ void Detector::processFrame(IplImage *frame){
 void Detector::applyFilters(IplImage *frame){
 
     // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
-    cvSmooth( thresholded, thresholded, CV_BLUR, 3, 3 );
+//    cvSmooth( frame, frame, CV_BLUR, 3, 3 );
     cvCvtColor(frame, hsv_frame, CV_BGR2HSV);
     // Filter out colors which are out of range.
     cvInRangeS(hsv_frame, hsv_min, hsv_max, thresholded);
     // hough detector works better with some smoothing of the image
-
-    cvErode(thresholded,thresholded,NULL,2);
+    cvErode(thresholded,thresholded,NULL,3);
 //    //        cvMorphologyEx(thresholded, thresholded, storage, NULL, CV_MOP_CLOSE, 2);
     cvSmooth( thresholded, thresholded, CV_BLUR, 19, 19 );
+    float kernel[] =
+        {0, -1, 0,
+		-1, 5, -1,
+		0, -1, 0};
+    
+	CvMat filter = cvMat(
+                         3,
+                         3,
+                         CV_32FC1,
+                         kernel);
+    //cvFilter2D(thresholded, thresholded, &filter);
+
 }
 
 
