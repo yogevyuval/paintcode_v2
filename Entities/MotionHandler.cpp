@@ -72,6 +72,9 @@ bool MotionHandler::didStopInSquare(CvRect square){
     if(recentRecords.size() == 0){
         cout << "size is 0" << endl;
         return false;
+    } else if (recentRecords.size() < MotionHandler::maxRecordSaves){
+        cout << "size is too small" << endl;
+        return false;
     }
     int counter = 0;
     for (int i = 0; i<recentRecords.size(); i++) {
@@ -110,6 +113,13 @@ void MotionHandler::addToDeque(Candidate * c)
     {
         recentRecords.pop_back();
     }
+}
+
+Candidate* MotionHandler::getLastCandidate(){
+    if (recentRecords.size() == 0){
+        return NULL;
+    }
+    return recentRecords[recentRecords.size() - 1];
 }
 
 void MotionHandler::print(){

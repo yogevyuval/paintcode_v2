@@ -9,7 +9,7 @@
 #include "testSave.h"
 #include "Entities/Motion.h"
 #include "Entities/Candidate.h"
-int main(){
+int saveMain(){
     Candidate cand1 = Candidate(1,2,3);
     Candidate cand2 = Candidate(12,22,32);
     Candidate cand3 = Candidate(13,23,33);
